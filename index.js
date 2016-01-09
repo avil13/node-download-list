@@ -60,13 +60,13 @@ var get = function(url, callback, doNotKeepAlive) {
     });
 })()
 .then(function(allBytes) {
-        console.log('Total size:', parseInt(allBytes / (1024 * 1024)), 'Mb');
+        console.log('Total size: ~', parseInt(allBytes / (1024 * 1024)), 'Mb');
         return allBytes;
     })
     .then(function(allBytes) {
         // Прогресс бар
         var bar = new ProgressBar(' Downloading [:bar] :percent :etas', {
-            complete: '=',
+            complete: '░',
             incomplete: ' ',
             width: 30,
             total: allBytes
