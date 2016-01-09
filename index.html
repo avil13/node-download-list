@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="APP">
+
+<head>
+    <meta charset="UTF-8">
+    <title>nodejs Download-list</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js"></script>
+    <style>
+    body {
+        padding-top: 10px;
+    }
+    .truncate {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container" ng-controller="MainCtrl">
+        <h1 class="text-center">Создание списка загрузок</h1>
+        <!--  -->
+        <div class="col-xs-12 col-sm-5">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Новый элемент списка</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="title">Название</label>
+                        <input type="text" name="title" id="title" placeholder="Name" class="form-control" ng-model="el.title">
+                    </div>
+                    <div class="form-group">
+                        <label for="url">url:</label>
+                        <input type="text" name="url" id="url" placeholder="http://..." class="form-control" ng-model="el.url">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-info btn-block" ng-click="add()">Добавить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  -->
+        <div class="col-xs-12 col-sm-7">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="content.name">
+                    </div>
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item truncate" ng-repeat="li in content.list" title="{{ li.url }}">
+                        <b>{{$index + 1}}.</b> {{li.title}}
+                        <button class="btn btn-default btn-xs pull-right" ng-click="del(li)">
+                            <i class="glyphicon glyphicon-remove"></i>
+                        </button>
+                    </li>
+                </ul>
+                <div class="panel-footer" ng-show="content.list.length">
+                    <button class="btn btn-info btn-block" ng-click="save()">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/app.js"></script>
+</body>
+
+</html>

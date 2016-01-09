@@ -1,64 +1,7 @@
 {
-    "name": "Angular 2 beta",
+    "name": "",
     "list": [{
-        "url": "https://embed-ssl.wistia.com/deliveries/bbf43d902f0bbe0b7544d7f50daa1941f7fc9b08/file.mp4",
-        "title": "Say \"Hello World\" to Angular 2"
-    }, {
-        "url": "https://embed-ssl.wistia.com/deliveries/a525f1791bacc2f69f79aaa46eff192debaa0009/file.mp4",
-        "title": "Writing a Simple Angular 2 Component"
-    }, {
-        "url": "https://embed-ssl.wistia.com/deliveries/52dbd77b19a50146a381e6df2f4fef1de1eb4c86/file.mp4",
-        "title": "Using events and refs"
-    }, {
-        "url": "https://embed-ssl.wistia.com/deliveries/d91e424496f554bb112fd725d94ed75584a103c3/file.mp4",
-        "title": "Events in Depth"
-    }, {
-        "url": "https://embed-ssl.wistia.com/deliveries/03fd460a7c958966d26bf689bb71c9c2805d86d3/file.mp4",
-        "title": "Injecting a Service"
-    }, {
-        "url": "https://embed-ssl.wistia.com/deliveries/461ef281cab99b2244ff4fdf3638a44382f24f33/file.mp4",
-        "title": "Using the @Inject decorator"
-    }, {
-        "url": "https://embed-ssl.wistia.com/deliveries/e9db7d2e2ae1cbe1cf1c4b9dc2ce308dffc9495e/file.mp4",
-        "title": "Using ng-for to repeat template elements"
-    }, {
-        "url": "https://embed-ssl.wistia.com/deliveries/d291d1dfac6ea9372c97bb599b97130e8830f90a/file.mp4",
-        "title": "Using ng-model for two-way binding"
-    }, {
-        "url": "https://embed-ssl.wistia.com/deliveries/58efdf2c83ad40e1efa867e68626b7046b2d7764/file.mp4",
-        "title": "Adding a data model"
-    }, {
-        "url": "https://embed-ssl.wistia.com/deliveries/c80668b993b1d380fea676b36d1cb93dca0c8332/file.mp4",
-        "title": "Template property syntax"
-    }, {
-        "url": "https://embed-ssl.wistia.com/deliveries/aed019bb18c06ff2cb6ac5b8276b3766bf01d704/file.mp4",
-        "title": "Passing data to components with @Input"
-    }, {
-        "url": "https://embed-ssl.wistia.com/deliveries/08f184ead969b13bd6335ae5288c5b52784ac99a/file.mp4",
-        "title": "ng-class and Encapsulated Component Styles"
-    }, {
-        "url": "https://embed-ssl.wistia.com/deliveries/73205a0c6209718ec0548230a50bf2ff92b55d0a/file.mp4",
-        "title": "Controlling how Styles are Shared with View Encapsulation"
-    }, {
-        "url": "https://embed-ssl.wistia.com/deliveries/f80305afd1e2d10d6fca52875094f426f1785244/file.mp4",
-        "title": "Using Pipes to Filter Data"
-    }, {
-        "url": "https://embed-ssl.wistia.com/deliveries/1db217f49d7f0b821795b7bdb9bee443982d3fba/file.mp4",
-        "title": "Using Array ...spread to enforce Pipe immutability"
-    }, {
-        "url": "https://embed-ssl.wistia.com/deliveries/c9c4c194fa61a00666bec171f1cdd5d144b74b6f/file.mp4",
-        "title": "Refactoring mutations to enforce immutable data in Angular 2"
-    }, {
-        "url": "https://embed-ssl.wistia.com/deliveries/6490f999d1aad435df80b46ab54e6cf27e3c9354/file.mp4",
-        "title": "Build a select dropdown with *ngFor in Angular 2"
-    }, {
-        "url": "https://embed-ssl.wistia.com/deliveries/6f786a69f80cd1c06764db106cfaf87f111e848d/file.mp4",
-        "title": "Filter items with a custom search Pipe in Angular 2"
-    }, {
-        "url": "https://embed-ssl.wistia.com/deliveries/bafdbf0eb1c547dec57786db8a88eebf73a90619/file.mp4",
-        "title": "Organizing Angular 2 projects by feature"
-    }, {
-        "url": "https://embed-ssl.wistia.com/deliveries/1ca4f307526e5eb278fdb831249a31f950306852/file.mp4",
-        "title": "Overview of Angular 2 and what to learn next..."
+        "title": "",
+        "url": ""
     }]
 }
