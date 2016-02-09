@@ -2,7 +2,6 @@ var https = require('https');
 var http = require('http');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
-var fs = require("fs");
 var ProgressBar = require('progress');
 var download_list = require('./list'); // список файлов
 
@@ -15,7 +14,7 @@ mkdirp(folder); // Создание папки
 var list_copy = list.slice();
 var nameL = function(el) {
     var ext = el.url.split('.').pop(); // расширение файла
-    var var num = '';
+    var num = '';
 
     // нужна ли нумерация
     if(download_list.autonumeration){
@@ -71,9 +70,9 @@ var get = function(url, callback, doNotKeepAlive) {
     })
     .then(function(allBytes) {
         // Прогресс бар
-        var bar = new ProgressBar(' Downloading [:bar] :percent :etas', {
-            complete: '░',
-            incomplete: ' ',
+        var bar = new ProgressBar(' Downloading ╣:bar╠ :percent :etas', {
+            complete: '▓',
+            incomplete: '░',
             width: 30,
             total: allBytes
         });
@@ -104,6 +103,9 @@ var get = function(url, callback, doNotKeepAlive) {
             get(path, function(res) {
                 res.pipe(file);
                 _stat(el);
+
+                // TODO добавить пересчет размеров скчачанных файлов
+                // res.on('chunck', callback);
 
                 // продолжаем закачку
                 res.on('end', function() {
