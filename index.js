@@ -14,12 +14,18 @@ mkdirp(folder); // Создание папки
 // Имя файла
 var list_copy = list.slice();
 var nameL = function(el) {
-    var num = list_copy.indexOf(el) + 1;
     var ext = el.url.split('.').pop(); // расширение файла
+    var var num = '';
 
-    if (num < 10) {
-        num = '0' + num;
+    // нужна ли нумерация
+    if(download_list.autonumeration){
+        num = list_copy.indexOf(el) + 1;
+
+        if (num < 10) {
+            num = '0' + num;
+        }
     }
+
     return folder + num + '. ' + (el.title || '') + '.' + ext;
 };
 
