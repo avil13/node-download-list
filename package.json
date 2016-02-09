@@ -1,6 +1,6 @@
 {
     "name": "node-download-list",
-    "version": "1.2.3",
+    "version": "1.2.4",
     "description": "Download list of files",
     "main": "index.js",
     "dependencies": {
@@ -11,7 +11,8 @@
     "devDependencies": {},
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "server": "http-server -a 0.0.0.0 -p 9000"
+        "server": "http-server -a 0.0.0.0 -p 9000",
+        "start": "node index.js"
     },
     "repository": {
         "type": "git",
