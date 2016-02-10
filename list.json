@@ -1,7 +1,8 @@
 {
-    "name": "",
+    "name": "FLV",
     "list": [{
-        "title": "",
-        "url": ""
+        "title": "test",
+        "url": "https://skyfiregce-a.akamaihd.net/exp=1455146031~acl=%2F148620031%2F%2A~hmac=129ac99f06640aaaa35571fbc2d43769643513d801b6aa2c9086f840a38db92d/148620031/video/452109937/chop/segment-2.m4s",
+        "chancks": true
     }]
 }
