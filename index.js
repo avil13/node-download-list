@@ -112,11 +112,16 @@ var get = function(url, callback, doNotKeepAlive) {
             // Загрузка
             get(path, function(res) {
                 if (res.statusCode !== 200) {
+                    file.destroy();
                     download(list_arr);
                     _stat(el);
+                    return;
                 }
 
-                res.pipe(file); // закачка файла
+                // закачка файла
+                res.pipe(file, {
+                    end: !is_chancks
+                });
 
                 // добавить пересчет размеров скчачанных файлов
                 res.on('chunck', function() {

@@ -2,7 +2,7 @@
     "name": "FLV",
     "list": [{
         "title": "test",
-        "url": "https://skyfiregce-a.akamaihd.net/exp=1455146031~acl=%2F148620031%2F%2A~hmac=129ac99f06640aaaa35571fbc2d43769643513d801b6aa2c9086f840a38db92d/148620031/video/452109937/chop/segment-2.m4s",
+        "url": "https://skyfire.vimeocdn.com/1455208847-0xf4eefbce9351b7be2f95326d9fa17d6e1396f417/147074878/video/445422015/chop/segment-1.m4s",
         "chancks": true
     }]
 }
