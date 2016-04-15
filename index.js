@@ -3,7 +3,19 @@ var http = require('http');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
 var ProgressBar = require('progress');
-var download_list = require('./list'); // список файлов
+var argv = require('yargs')
+    .example('$0 -l list.json')
+    .help('h')
+    .alias('h', 'help')
+    .options('l', {
+        alias: 'list',
+        "default": 'list.json',
+        describe: 'Файл со списком для загрузки в этой папке',
+        type: 'string',
+        demand: false
+    }).argv;
+
+var download_list = require('./' + argv.l); // список файлов
 
 // Название папки и список
 var list = download_list.list;
@@ -17,7 +29,7 @@ var nameL = function(el) {
     var num = '';
 
     // нужна ли нумерация
-    if(download_list.autonumeration){
+    if (download_list.autonumeration) {
         num = list_copy.indexOf(el) + 1;
 
         if (num < 10) {
