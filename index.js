@@ -27,17 +27,15 @@ var list_copy = list.slice();
 var nameL = function(el) {
     var ext = el.url.split('.').pop(); // расширение файла
     var num = '';
+    var title = el.title || el.url.split('/').pop().split('.' + ext).shift() || '';
 
     // нужна ли нумерация
     if (download_list.autonumeration) {
         num = list_copy.indexOf(el) + 1;
-
-        if (num < 10) {
-            num = '0' + num;
-        }
+        num = ((num < 10) ? '0' + num : num) + '. ';
     }
 
-    return folder + num + '. ' + (el.title || '') + '.' + ext;
+    return folder + num + title + '.' + ext;
 };
 
 // Универсальный метод для загрузки по http и https
@@ -49,9 +47,11 @@ var get = function(url, callback, doNotKeepAlive) {
     } else {
         response = http.get(url, callback);
     }
+
     if (doNotKeepAlive === true) {
         response.shouldKeepAlive = false;
     }
+
     return response;
 };
 
@@ -63,10 +63,15 @@ var get = function(url, callback, doNotKeepAlive) {
         var allBytes = 0;
 
         var addSize = function(i) {
+            i = parseInt(i);
+
             return function(res) {
                 allBytes += parseInt(res.headers['content-length']);
-                if (i == list.length - 1) {
-                    resolve(allBytes);
+
+                if (i === list.length - 1) {
+                    setTimeout(function(){
+                        resolve(allBytes); 
+                    }, 0);
                 }
             };
         };
@@ -82,47 +87,52 @@ var get = function(url, callback, doNotKeepAlive) {
     })
     .then(function(allBytes) {
         // Прогресс бар
-        var bar = new ProgressBar(' Downloading ╣:bar╠ :percent :etas', {
+        var bar = new ProgressBar(' Downloading ╣:bar╠ :percent :etas ', {
             complete: '▓',
             incomplete: '░',
             width: 30,
             total: allBytes
         });
-        return bar;
+
+        bar.tick(0);
+
+        return {
+            bar: bar,
+            allBytes: allBytes
+        };
     })
-    .then(function(bar) {
+    .then(function(data) {
+        bar = data.bar;
+        allBytes = data.allBytes;
+
         // Старт закачки
         (function download(list_arr) {
             if (list_arr.length === 0) {
                 return false;
             }
-            var el = list_arr.splice(0, 1)[0],
-                path = el.url;
-
+            var el = list_arr.shift();
             var file = fs.createWriteStream(nameL(el));
-            var prev_size = 0; // Для отсчета размера файла, сохраняем его предыдущее значение
+
             // размер закачиваемого файла
             var _stat = function(el) {
                 fs.stat(nameL(el), function(err, stat) {
-                    var size = stat['size'];
-
-                    bar.tick(size - prev_size);
-                    prev_size = size;
+                    bar.tick(stat['size']);
                 });
             };
 
             // Загрузка
-            get(path, function(res) {
+            get(el.url, function(res) {
                 res.pipe(file);
-                _stat(el);
 
                 // TODO добавить пересчет размеров скчачанных файлов
-                // res.on('chunck', callback);
+                // res.on('chunck', function () {
+                //     _stat(el);
+                // });
 
                 // продолжаем закачку
                 res.on('end', function() {
-                    download(list_arr);
                     _stat(el);
+                    download(list_arr);
                 });
             });
         })(list);

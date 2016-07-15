@@ -12,8 +12,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "http-server -a 0.0.0.0 -p 9000 -o ",
-    "start": "node index.js"
+    "start": "http-server -a 0.0.0.0 -p 9090 -o ",
+    "d": "node index.js"
   },
   "repository": {
     "type": "git",
