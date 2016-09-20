@@ -25,8 +25,14 @@ mkdirp(folder); // Создание папки
 // Имя файла
 var list_copy = list.slice();
 var nameL = function(el) {
-    var ext = el.url.split('.').pop(); // расширение файла
+    var ext = '.' + el.url.split('.').pop(); // расширение файла
     var num = '';
+    var title = el.title;
+
+    if (!title) {
+        title = el.url.split('/').pop();
+        ext = '';
+    }
 
     // нужна ли нумерация
     if (download_list.autonumeration) {
@@ -35,9 +41,10 @@ var nameL = function(el) {
         if (num < 10) {
             num = '0' + num;
         }
+        num += '. ';
     }
 
-    return folder + num + '. ' + (el.title || '') + '.' + ext;
+    return folder + num + title + ext;
 };
 
 // Универсальный метод для загрузки по http и https
