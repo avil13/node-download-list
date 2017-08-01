@@ -1,31 +1,30 @@
-var https = require('https');
-var http = require('http');
 var fs = require('fs');
-var mkdirp = require('mkdirp');
 var ProgressBar = require('progress');
-var argv = require('yargs')
-    .example('$0 -l list.json')
-    .help('h')
-    .alias('h', 'help')
-    .options('l', {
-        alias: 'list',
-        "default": 'list.json',
-        describe: 'Файл со списком для загрузки в этой папке',
-        type: 'string',
-        demand: false
-    }).argv;
+var path = require('path');
+var red = require('cli-color').red;
+var get = require('./libs/request');
+var mkdirp = require('./libs/mkdirp');
+var argumentes = require('./libs/arguments');
+arg = argumentes();
 
-var download_list = require('./' + argv.l); // список файлов
+
+var download_list = require('./' + (arg.l || arg.list)); // список файлов
+
+
+if (!download_list || !download_list.name || download_list.list.length === 0) {
+    console.log(red('Empty params in download list files'));
+    process.exit(1);
+}
+
 
 // Название папки и список
 var list = download_list.list;
-var folder = 'download/' + download_list.name + '/';
-mkdirp(folder); // Создание папки
+var folder = [__dirname, 'download', download_list.name].join(path.sep);
 
 // Имя файла
 var list_copy = list.slice();
-var nameL = function(el) {
-    var ext = '.' + el.url.split('.').pop(); // расширение файла
+var nameL = function (el) {
+    var ext = ''; // '.' + el.url.split('.').pop(); // расширение файла
     var num = '';
     var title = el.title;
 
@@ -44,60 +43,48 @@ var nameL = function(el) {
         num += '. ';
     }
 
-    return folder + num + title + ext;
-};
+    title = title.split(/\\|\//);
+    var base_title = title.pop();
 
-// Универсальный метод для загрузки по http и https
-var get = function(url, callback, doNotKeepAlive) {
-    var response;
-
-    if ((/^https/g).test(url)) {
-        response = https.get(url, callback);
-    } else {
-        response = http.get(url, callback);
-    }
-    if (doNotKeepAlive === true) {
-        response.shouldKeepAlive = false;
-    }
-    return response;
+    return mkdirp(folder + path.sep + title.join('/')) + num + base_title + ext;
 };
 
 
-
-(function() {
-    return new Promise(function(resolve, reject) {
+(function () {
+    return new Promise(function (resolve, reject) {
         // статистикаб общий размер файлов
-        var allBytes = 0;
+        // var allBytes = 0;
 
-        var addSize = function(i) {
-            return function(res) {
-                allBytes += parseInt(res.headers['content-length']);
-                if (i == list.length - 1) {
-                    resolve(allBytes);
-                }
-            };
-        };
+        // var addSize = function (i) {
+        //     return function (res) {
+        //         allBytes += parseInt(res.headers['content-length']);
+        //         if (i == list.length - 1) {
+        //             resolve(allBytes);
+        //         }
+        //     };
+        // };
 
-        for (var i in list) {
-            get(list[i].url, addSize(i), true);
-        }
+        // for (var i in list) {
+        //     get(list[i].url, addSize(i), true);
+        // }
+        resolve(list.length);
     });
 })()
-.then(function(allBytes) {
-        console.log('Total size: ~', parseInt(allBytes / (1024 * 1024)), 'Mb');
-        return allBytes;
+.then(function (count) {
+        console.log('Count files: ~', count);
+        return count;
     })
-    .then(function(allBytes) {
+    .then(function (count) {
         // Прогресс бар
         var bar = new ProgressBar(' Downloading ╣:bar╠ :percent :etas', {
             complete: '▓',
             incomplete: '░',
             width: 30,
-            total: allBytes
+            total: count
         });
         return bar;
     })
-    .then(function(bar) {
+    .then(function (bar) {
         // Старт закачки
         (function download(list_arr) {
             if (list_arr.length === 0) {
@@ -107,33 +94,34 @@ var get = function(url, callback, doNotKeepAlive) {
                 path = el.url;
 
             var file = fs.createWriteStream(nameL(el));
-            var prev_size = 0; // Для отсчета размера файла, сохраняем его предыдущее значение
+            // var prev_size = 0; // Для отсчета размера файла, сохраняем его предыдущее значение
             // размер закачиваемого файла
-            var _stat = function(el) {
-                fs.stat(nameL(el), function(err, stat) {
-                    var size = stat['size'];
+            var _stat = function (el) {
+                // fs.stat(nameL(el), function (err, stat) {
+                //     var size = stat['size'];
 
-                    bar.tick(size - prev_size);
-                    prev_size = size;
-                });
+                //     bar.tick(size - prev_size);
+                //     prev_size = size;
+                // });
+                bar.tick(list_copy.length - list_arr.length);
             };
 
             // Загрузка
-            get(path, function(res) {
+            get(path, function (res) {
                 res.pipe(file);
-                _stat(el);
+                // _stat(el);
 
                 // TODO добавить пересчет размеров скчачанных файлов
                 // res.on('chunck', callback);
 
                 // продолжаем закачку
-                res.on('end', function() {
+                res.on('end', function () {
                     download(list_arr);
                     _stat(el);
                 });
             });
         })(list);
     })
-    .catch(function(err) {
+    .catch(function (err) {
         console.log(err);
     });
